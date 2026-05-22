@@ -59,7 +59,8 @@ class ProductListScreen extends StatelessWidget {
                               ? 'All'
                               : controller.categories[index - 1].title;
                           final bool selected =
-                              controller.selectedCategory.value == categoryLabel;
+                              controller.selectedCategory.value ==
+                              categoryLabel;
                           return ChoiceChip(
                             label: Text(categoryLabel),
                             selected: selected,
@@ -77,11 +78,11 @@ class ProductListScreen extends StatelessWidget {
                               itemCount: controller.filteredProducts.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 14,
-                                mainAxisSpacing: 14,
-                                childAspectRatio: 0.73,
-                              ),
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 14,
+                                    mainAxisSpacing: 14,
+                                    childAspectRatio: 0.73,
+                                  ),
                               itemBuilder: (context, index) {
                                 final product =
                                     controller.filteredProducts[index];
@@ -91,7 +92,8 @@ class ProductListScreen extends StatelessWidget {
                     ),
                   ],
                 );
-            }),
+              }),
+            ),
           ],
         ),
       ),

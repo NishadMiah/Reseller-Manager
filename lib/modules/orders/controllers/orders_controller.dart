@@ -19,6 +19,12 @@ class OrdersController extends GetxController {
     loading.value = false;
   }
 
+  /// Place a new order (demo/in-memory).
+  void placeOrder(OrderModel order) {
+    orders.insert(0, order);
+    orders.refresh();
+  }
+
   void updateStatus(OrderModel order, OrderStatus status) {
     order.status = status;
     orders.refresh();

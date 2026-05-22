@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_project_architecture/data/models/order_model.dart';
 import 'package:flutter_project_architecture/widgets/order_status_chip.dart';
 
@@ -28,11 +29,21 @@ class OrderDetailScreen extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(AppSizes.borderRadius),
-              child: Image.network(
-                order.imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: order.imageUrl,
                 width: double.infinity,
                 height: 220,
                 fit: BoxFit.cover,
+                placeholder: (c, u) =>
+                    Container(height: 220, color: AppColors.surfaceElevated),
+                errorWidget: (c, u, e) => Container(
+                  height: 220,
+                  color: AppColors.surfaceElevated,
+                  child: const Icon(
+                    Icons.broken_image,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 20),
