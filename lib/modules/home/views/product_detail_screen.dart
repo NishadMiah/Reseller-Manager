@@ -200,7 +200,7 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<String>(
-                  initialValue: paymentMethod,
+                  value: paymentMethod,
                   decoration: const InputDecoration(
                     labelText: 'Payment method',
                   ),
