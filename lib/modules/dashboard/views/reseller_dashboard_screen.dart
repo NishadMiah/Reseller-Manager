@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/core/constants/app_strings.dart';
@@ -15,7 +16,6 @@ class ResellerDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DashboardController controller = Get.put(DashboardController());
-    final formatter = NumberFormat.simpleCurrency(locale: 'en_US');
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -76,7 +76,7 @@ class ResellerDashboardScreen extends StatelessWidget {
                   children: [
                     _summaryCard(
                       title: 'Balance',
-                      value: formatter.format(controller.currentBalance),
+                      value: formatCurrency(controller.currentBalance),
                       icon: Icons.account_balance_wallet_rounded,
                       baseColor: AppColors.info,
                       context: context,
@@ -84,7 +84,7 @@ class ResellerDashboardScreen extends StatelessWidget {
                     const SizedBox(width: 14),
                     _summaryCard(
                       title: 'Earnings',
-                      value: formatter.format(controller.totalEarnings),
+                      value: formatCurrency(controller.totalEarnings),
                       icon: Icons.insights_rounded,
                       baseColor: AppColors.success,
                       context: context,

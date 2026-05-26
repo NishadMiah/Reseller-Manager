@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/admin/controllers/admin_controller.dart';
@@ -98,7 +99,7 @@ class AdminDashboardScreen extends StatelessWidget {
                   const SizedBox(width: 14),
                   _metricCard(
                     label: 'Revenue',
-                    value: '\$${controller.revenue.toStringAsFixed(2)}',
+                    value: formatCurrency(controller.revenue),
                     icon: Icons.payments_rounded,
                     baseColor: AppColors.success,
                   ),
@@ -198,7 +199,7 @@ class AdminDashboardScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        '${request.method} • \$${request.amount.toStringAsFixed(2)}',
+                                        '${request.method} • ${formatCurrency(request.amount)}',
                                         style: const TextStyle(
                                           color: AppColors.textSecondary,
                                           fontSize: 12.5,

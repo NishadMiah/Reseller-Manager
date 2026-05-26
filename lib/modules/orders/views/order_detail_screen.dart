@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,7 +13,6 @@ class OrderDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrderModel order = Get.arguments as OrderModel;
-    final formatter = NumberFormat.simpleCurrency(locale: 'en_US');
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -70,7 +69,7 @@ class OrderDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _detailRow('Quantity', order.quantity.toString()),
             _detailRow('Payment', order.paymentMethod),
-            _detailRow('Total', formatter.format(order.total)),
+            _detailRow('Total', formatCurrency(order.total)),
             const SizedBox(height: 24),
             Text(
               'Status timeline',

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/data/models/product_model.dart';
 import 'package:flutter_project_architecture/routes/app_pages.dart';
@@ -12,7 +12,6 @@ class InstagramProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 2);
     final hasMultipleImages = product.images.length > 1;
 
     return GestureDetector(
@@ -99,7 +98,7 @@ class InstagramProductCard extends StatelessWidget {
                     // Price Tag
                     Expanded(
                       child: Text(
-                        formatter.format(product.price),
+                        formatCurrency(product.price),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 13.5,

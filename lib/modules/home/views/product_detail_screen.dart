@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/data/models/product_model.dart';
 import 'package:flutter_project_architecture/widgets/custom_button.dart';
@@ -15,7 +15,6 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductModel product = Get.arguments as ProductModel;
-    final priceFormatter = NumberFormat.simpleCurrency(locale: 'en_US');
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -60,7 +59,7 @@ class ProductDetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                priceFormatter.format(product.price),
+                formatCurrency(product.price),
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
@@ -84,7 +83,7 @@ class ProductDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Profit: ${priceFormatter.format(product.margin)}',
+            'Profit: ${formatCurrency(product.margin)}',
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               color: AppColors.success,
