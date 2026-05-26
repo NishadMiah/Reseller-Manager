@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_strings.dart';
-import 'package:flutter_project_architecture/data/models/user_model.dart';
 import 'package:flutter_project_architecture/modules/auth/controllers/auth_controller.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -11,6 +10,10 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController controller = Get.find<AuthController>();
+    // Reset selected role to reseller upon screen entry
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.prepareRegister();
+    });
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -76,33 +79,37 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              Obx(
-                () => Row(
-                  children: UserRole.values.map((role) {
-                    final bool selected = controller.selectedRole.value == role;
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: ChoiceChip(
-                          label: Text(
-                            role == UserRole.admin ? 'Admin' : 'Reseller',
-                          ),
-                          selected: selected,
-                          selectedColor: AppColors.primary,
-                          backgroundColor: AppColors.surface,
-                          labelStyle: TextStyle(
-                            color: selected
-                                ? Colors.white
-                                : AppColors.textPrimary,
-                          ),
-                          onSelected: (_) => controller.changeRole(role),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppColors.info.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppColors.info.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.info_outline_rounded,
+                      color: AppColors.info,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Only Reseller accounts can be registered. Contact system administration for Admin access.',
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 12.5,
+                          height: 1.4,
                         ),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
               Obx(
                 () => ElevatedButton(
                   onPressed: controller.loading.value

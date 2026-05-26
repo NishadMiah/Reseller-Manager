@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_strings.dart';
-import 'package:flutter_project_architecture/data/models/user_model.dart';
 import 'package:flutter_project_architecture/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_project_architecture/routes/app_pages.dart';
+import 'package:flutter_project_architecture/widgets/modern_role_selector.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -31,29 +31,9 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               Obx(
-                () => Row(
-                  children: UserRole.values.map((role) {
-                    final bool selected = controller.selectedRole.value == role;
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: ChoiceChip(
-                          label: Text(
-                            role == UserRole.admin ? 'Admin' : 'Reseller',
-                          ),
-                          selected: selected,
-                          selectedColor: AppColors.primary,
-                          backgroundColor: AppColors.surface,
-                          labelStyle: TextStyle(
-                            color: selected
-                                ? Colors.white
-                                : AppColors.textPrimary,
-                          ),
-                          onSelected: (_) => controller.changeRole(role),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                () => ModernRoleSelector(
+                  selectedRole: controller.selectedRole.value,
+                  onRoleChanged: controller.changeRole,
                 ),
               ),
               const SizedBox(height: 28),

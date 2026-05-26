@@ -27,6 +27,10 @@ class AuthController extends GetxController {
     storage.saveSelectedRole(role.name);
   }
 
+  void prepareRegister() {
+    selectedRole.value = UserRole.reseller;
+  }
+
   void toggleRememberMe(bool? value) {
     rememberMe.value = value ?? false;
   }
@@ -61,6 +65,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> register() async {
+    // Ensure registration is always registered under Reseller role
+    selectedRole.value = UserRole.reseller;
     if (nameController.text.isEmpty ||
         emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
