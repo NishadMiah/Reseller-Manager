@@ -8,6 +8,8 @@ import 'package:flutter_project_architecture/modules/auth/views/register_screen.
 import 'package:flutter_project_architecture/modules/auth/views/splash_screen.dart';
 import 'package:flutter_project_architecture/modules/home/views/home_screen.dart';
 import 'package:flutter_project_architecture/modules/home/views/product_detail_screen.dart';
+import 'package:flutter_project_architecture/modules/wallet/views/withdraw_detail_screen.dart';
+import 'package:flutter_project_architecture/modules/admin/views/admin_user_detail_screen.dart';
 import 'package:flutter_project_architecture/modules/product/views/product_form_screen.dart';
 import 'package:flutter_project_architecture/modules/orders/views/order_detail_screen.dart';
 
@@ -21,6 +23,8 @@ class AppRoutes {
   static const String resellerRoot = '/reseller-root';
   static const String adminRoot = '/admin-root';
   static const String productDetail = '/product-detail';
+  static const String withdrawDetail = '/withdraw-detail';
+  static const String adminUserDetail = '/admin-user-detail';
   static const String orderDetail = '/order-detail';
   static const String productForm = '/product-form';
 }
@@ -44,6 +48,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.productDetail,
       page: () => const ProductDetailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.withdrawDetail,
+      page: () => const WithdrawDetailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.adminUserDetail,
+      page: () => const AdminUserDetailScreen(),
     ),
     GetPage(name: AppRoutes.orderDetail, page: () => const OrderDetailScreen()),
     GetPage(name: AppRoutes.productForm, page: () => const ProductFormScreen()),

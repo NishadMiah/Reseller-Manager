@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_project_architecture/widgets/custom_button.dart';
+// custom_button removed from this screen to improve visibility of native buttons
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -53,46 +53,78 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   padding: const EdgeInsets.all(18),
-                  child: Row(
+                  child: Stack(
                     children: [
-                      // Avatar placeholder with gradient border
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [AppColors.primary, AppColors.secondary],
-                          ),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 42,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Nasir Ahmed',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                      Row(
+                        children: [
+                          // Avatar placeholder with gradient border
+                          Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [
+                                  AppColors.primary,
+                                  AppColors.secondary,
+                                ],
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.person,
+                                size: 42,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Reseller',
-                            style: TextStyle(
-                              color: Colors.white70,
-                            ),
+                          const SizedBox(width: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Nasir Ahmed',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                'Reseller',
+                                style: TextStyle(color: Colors.white70),
+                              ),
+                            ],
                           ),
                         ],
+                      ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.star, size: 14, color: Colors.white),
+                              SizedBox(width: 6),
+                              Text(
+                                'Premium',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -133,18 +165,41 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            CustomButton(
-              label: 'Change Password',
-              onPressed: () =>
-                  Get.snackbar('Security', 'Navigating to change password...'),
-              filled: false,
+            OutlinedButton(
+              onPressed: () => Get.snackbar('Security', 'Navigating to change password...'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+                side: BorderSide(color: AppColors.primary),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: const Text('Change Password'),
             ),
             const SizedBox(height: 14),
-            CustomButton(
-              label: 'Logout',
+            ElevatedButton(
+              onPressed: () =>
+                  Get.snackbar('Upgrade', 'Upgrade flow not implemented.'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.secondary,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text('Upgrade to Premium'),
+            ),
+            const SizedBox(height: 14),
+            ElevatedButton(
               onPressed: controller.logout,
-              filled: false,
-              color: AppColors.danger,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.danger,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: const Text('Logout'),
             ),
           ],
         ),

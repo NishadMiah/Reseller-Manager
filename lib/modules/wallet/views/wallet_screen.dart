@@ -105,38 +105,49 @@ class WalletScreen extends StatelessWidget {
               ),
               const SizedBox(height: 14),
               ...controller.withdrawRequests.map(
-                (withdraw) => Container(
-                  margin: const EdgeInsets.only(bottom: 14),
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppSizes.borderRadius),
-                    boxShadow: [AppSizes.cardShadow],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            withdraw.method,
-                            style: const TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${formatter.format(withdraw.amount)} • ${withdraw.status.name.capitalizeFirst}',
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
+                (withdraw) => InkWell(
+                  onTap: () {
+                    Get.toNamed('/withdraw-detail', arguments: withdraw);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 14),
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(
+                        AppSizes.borderRadius,
+                      ),
+                      boxShadow: [AppSizes.cardShadow],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              withdraw.method,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '${formatter.format(withdraw.amount)} • ${withdraw.status.name.capitalizeFirst}',
+                              style: const TextStyle(
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          DateFormat('dd MMM').format(withdraw.submittedAt),
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
                           ),
-                        ],
-                      ),
-                      Text(
-                        DateFormat('dd MMM').format(withdraw.submittedAt),
-                        style: const TextStyle(color: AppColors.textSecondary),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

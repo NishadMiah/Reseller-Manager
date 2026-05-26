@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/admin/controllers/admin_controller.dart';
+import 'package:flutter_project_architecture/routes/app_pages.dart';
 import 'package:flutter_project_architecture/data/models/withdraw_request_model.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
@@ -118,7 +119,18 @@ class AdminDashboardScreen extends StatelessWidget {
                   if (isApproved) statusColor = AppColors.success;
                   if (request.status == WithdrawStatus.rejected) statusColor = AppColors.danger;
 
-                  return Container(
+                  return InkWell(
+                    onTap: () async {
+                      final res = await Get.toNamed(AppRoutes.withdrawDetail, arguments: request);
+                      if (res is Map && res['action'] != null) {
+                        if (res['action'] == 'approve') {
+                          controller.approveWithdrawRequest(request);
+                        } else if (res['action'] == 'reject') {
+                          controller.rejectWithdrawRequest(request);
+                        }
+                      }
+                    },
+                    child: Container(
                     margin: const EdgeInsets.only(bottom: 14),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -158,25 +170,42 @@ class AdminDashboardScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      request.userName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
+                                GestureDetector(
+                                  onTap: () {
+                                    // try find full user, otherwise pass a minimal placeholder
+                                    dynamic found;
+                                    try {
+                                      found = controller.users.firstWhere((u) => u.name == request.userName);
+                                    } catch (e) {
+                                      found = null;
+                                    }
+
+                                    if (found != null) {
+                                      Get.toNamed(AppRoutes.adminUserDetail, arguments: found);
+                                    } else {
+                                      Get.toNamed(AppRoutes.adminUserDetail, arguments: null);
+                                    }
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        request.userName,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '${request.method} • \$${request.amount.toStringAsFixed(2)}',
-                                      style: const TextStyle(
-                                        color: AppColors.textSecondary,
-                                        fontSize: 12.5,
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '${request.method} • \$${request.amount.toStringAsFixed(2)}',
+                                        style: const TextStyle(
+                                          color: AppColors.textSecondary,
+                                          fontSize: 12.5,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -230,7 +259,7 @@ class AdminDashboardScreen extends StatelessWidget {
                         ],
                       ],
                     ),
-                  );
+                  ));
                 },
               ),
             ],
