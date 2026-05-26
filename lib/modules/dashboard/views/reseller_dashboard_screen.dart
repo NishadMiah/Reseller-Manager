@@ -28,47 +28,86 @@ class ResellerDashboardScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 16),
-                Text(
-                  'Good morning, Reseller',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Your dashboard is ready for action.',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Good morning, Reseller 👋',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.textPrimary,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          DateFormat('EEEE, MMM d').format(DateTime.now()),
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                          width: 2,
+                        ),
+                      ),
+                      child: const CircleAvatar(
+                        radius: 22,
+                        backgroundImage: NetworkImage(
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 24),
                 Row(
                   children: [
                     _summaryCard(
-                      'Balance',
-                      formatter.format(controller.currentBalance),
-                      AppColors.info,
+                      title: 'Balance',
+                      value: formatter.format(controller.currentBalance),
+                      icon: Icons.account_balance_wallet_rounded,
+                      baseColor: AppColors.info,
+                      context: context,
                     ),
                     const SizedBox(width: 14),
                     _summaryCard(
-                      'Earnings',
-                      formatter.format(controller.totalEarnings),
-                      AppColors.success,
+                      title: 'Earnings',
+                      value: formatter.format(controller.totalEarnings),
+                      icon: Icons.insights_rounded,
+                      baseColor: AppColors.success,
+                      context: context,
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 Row(
                   children: [
                     _summaryCard(
-                      'Pending',
-                      '${controller.pendingOrders}',
-                      AppColors.warning,
-                      flex: 1,
+                      title: 'Pending',
+                      value: '${controller.pendingOrders}',
+                      icon: Icons.hourglass_empty_rounded,
+                      baseColor: AppColors.warning,
+                      context: context,
                     ),
                     const SizedBox(width: 14),
                     _summaryCard(
-                      'Delivered',
-                      '${controller.completedOrders}',
-                      AppColors.primary,
-                      flex: 1,
+                      title: 'Delivered',
+                      value: '${controller.completedOrders}',
+                      icon: Icons.local_shipping_rounded,
+                      baseColor: AppColors.primary,
+                      context: context,
                     ),
                   ],
                 ),
@@ -85,13 +124,21 @@ class ResellerDashboardScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final order = controller.orders[index];
                       return Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(
-                            AppSizes.borderRadius,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: AppColors.border.withValues(alpha: 0.25),
+                            width: 1,
                           ),
-                          boxShadow: [AppSizes.cardShadow],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.02),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
                         child: Row(
                           children: [
@@ -166,27 +213,73 @@ class ResellerDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _summaryCard(String title, String value, Color color, {int flex = 2}) {
+  Widget _summaryCard({
+    required String title,
+    required String value,
+    required IconData icon,
+    required Color baseColor,
+    required BuildContext context,
+  }) {
     return Expanded(
-      flex: flex,
       child: Container(
-        height: 120,
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.borderRadius),
-          gradient: LinearGradient(
-            colors: [color.withValues(alpha: 41), AppColors.surface],
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: baseColor.withValues(alpha: 0.15),
+            width: 1,
           ),
-          boxShadow: [AppSizes.cardShadow],
+          boxShadow: [
+            BoxShadow(
+              color: baseColor.withValues(alpha: 0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.02),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(color: AppColors.textSecondary)),
-            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: baseColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: baseColor,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             Text(
               value,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textPrimary,
+                letterSpacing: -0.5,
+              ),
             ),
           ],
         ),

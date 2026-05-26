@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
-import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/dashboard/views/reseller_dashboard_screen.dart';
 import 'package:flutter_project_architecture/modules/home/controllers/home_controller.dart';
 import 'package:flutter_project_architecture/modules/home/views/product_list_screen.dart';
 import 'package:flutter_project_architecture/modules/orders/views/order_list_screen.dart';
 import 'package:flutter_project_architecture/modules/profile/views/profile_screen.dart';
 import 'package:flutter_project_architecture/modules/wallet/views/wallet_screen.dart';
+import 'package:flutter_project_architecture/widgets/modern_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,42 +27,35 @@ class HomeScreen extends StatelessWidget {
         extendBody: true,
         backgroundColor: AppColors.background,
         body: pages[controller.selectedIndex.value],
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [AppSizes.cardShadow],
-          ),
-          child: BottomNavigationBar(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: ModernBottomNavbar(
             currentIndex: controller.selectedIndex.value,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            selectedItemColor: AppColors.primary,
-            unselectedItemColor: AppColors.textSecondary,
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
             onTap: controller.changeTab,
             items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_customize_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.dashboard_customize_outlined,
+                activeIcon: Icons.dashboard_customize,
                 label: 'Dashboard',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.grid_view_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.grid_view_outlined,
+                activeIcon: Icons.grid_view_rounded,
                 label: 'Products',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.receipt_long_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.receipt_long_outlined,
+                activeIcon: Icons.receipt_long,
                 label: 'Orders',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_balance_wallet_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.account_balance_wallet_outlined,
+                activeIcon: Icons.account_balance_wallet,
                 label: 'Wallet',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
+              ModernBottomNavbarItem(
+                icon: Icons.person_outline,
+                activeIcon: Icons.person,
                 label: 'Profile',
               ),
             ],

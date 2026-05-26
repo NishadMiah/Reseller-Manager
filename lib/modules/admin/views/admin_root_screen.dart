@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_project_architecture/core/constants/app_colors.dart';
-import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/admin/views/admin_dashboard_screen.dart';
 import 'package:flutter_project_architecture/modules/admin/views/admin_orders_screen.dart';
 import 'package:flutter_project_architecture/modules/admin/views/admin_products_screen.dart';
 import 'package:flutter_project_architecture/modules/admin/views/admin_profile_screen.dart';
 import 'package:flutter_project_architecture/modules/admin/views/admin_users_screen.dart';
 import 'package:flutter_project_architecture/modules/admin/controllers/admin_controller.dart';
+import 'package:flutter_project_architecture/widgets/modern_bottom_navbar.dart';
 
 class AdminRootScreen extends StatelessWidget {
   const AdminRootScreen({super.key});
@@ -26,40 +25,35 @@ class AdminRootScreen extends StatelessWidget {
       () => Scaffold(
         extendBody: true,
         body: pages[controller.selectedIndex.value],
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [AppSizes.cardShadow],
-          ),
-          child: BottomNavigationBar(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: ModernBottomNavbar(
             currentIndex: controller.selectedIndex.value,
             onTap: controller.changeTab,
-            backgroundColor: Colors.transparent,
-            selectedItemColor: AppColors.primary,
-            unselectedItemColor: AppColors.textSecondary,
-            type: BottomNavigationBarType.fixed,
-            elevation: 0,
             items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.dashboard_outlined,
+                activeIcon: Icons.dashboard,
                 label: 'Dashboard',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.receipt_long_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.receipt_long_outlined,
+                activeIcon: Icons.receipt_long,
                 label: 'Orders',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.group_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.group_outlined,
+                activeIcon: Icons.group,
                 label: 'Users',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.inventory_2_outlined),
+              ModernBottomNavbarItem(
+                icon: Icons.inventory_2_outlined,
+                activeIcon: Icons.inventory_2,
                 label: 'Products',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
+              ModernBottomNavbarItem(
+                icon: Icons.person_outline,
+                activeIcon: Icons.person,
                 label: 'Profile',
               ),
             ],

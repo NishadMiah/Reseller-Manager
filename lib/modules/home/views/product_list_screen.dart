@@ -4,7 +4,7 @@ import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_strings.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/modules/home/controllers/product_controller.dart';
-import 'package:flutter_project_architecture/widgets/product_card.dart';
+import 'package:flutter_project_architecture/widgets/instagram_product_card.dart';
 
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
@@ -37,13 +37,15 @@ class ProductListScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (controller.loading.value) {
-                  return ListView.separated(
-                    itemCount: 4,
-                    separatorBuilder: (_, _) => const SizedBox(height: 16),
-                    itemBuilder: (context, index) => const SizedBox(
-                      height: 130,
-                      child: _LoadingProductCard(),
+                  return GridView.builder(
+                    itemCount: 9,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 6,
+                      mainAxisSpacing: 6,
+                      childAspectRatio: 1.0,
                     ),
+                    itemBuilder: (context, index) => const _LoadingProductCard(),
                   );
                 }
                 return Column(
@@ -78,15 +80,15 @@ class ProductListScreen extends StatelessWidget {
                               itemCount: controller.filteredProducts.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 14,
-                                    mainAxisSpacing: 14,
-                                    childAspectRatio: 0.73,
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 6,
+                                    mainAxisSpacing: 6,
+                                    childAspectRatio: 1.0,
                                   ),
                               itemBuilder: (context, index) {
                                 final product =
                                     controller.filteredProducts[index];
-                                return ProductCard(product: product);
+                                return InstagramProductCard(product: product);
                               },
                             ),
                     ),
@@ -109,7 +111,7 @@ class _LoadingProductCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceElevated,
-        borderRadius: BorderRadius.circular(AppSizes.borderRadius),
+        borderRadius: BorderRadius.circular(12),
       ),
     );
   }

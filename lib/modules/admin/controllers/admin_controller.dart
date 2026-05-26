@@ -54,6 +54,16 @@ class AdminController extends GetxController {
     products.remove(product);
   }
 
+  void approveWithdrawRequest(WithdrawRequestModel request) {
+    request.status = WithdrawStatus.approved;
+    withdrawRequests.refresh();
+  }
+
+  void rejectWithdrawRequest(WithdrawRequestModel request) {
+    request.status = WithdrawStatus.rejected;
+    withdrawRequests.refresh();
+  }
+
   void changeTab(int index) {
     selectedIndex.value = index;
   }
