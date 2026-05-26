@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_architecture/utils/currency_formatter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
 import 'package:flutter_project_architecture/core/constants/app_sizes.dart';
 import 'package:flutter_project_architecture/data/models/product_model.dart';
@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat.simpleCurrency(locale: 'en_US');
+    // Using BDT formatter via utility
     return GestureDetector(
       onTap: () => Get.toNamed(AppRoutes.productDetail, arguments: product),
       child: Container(
@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  formatter.format(product.price),
+                  formatCurrency(product.price),
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
                 Container(
