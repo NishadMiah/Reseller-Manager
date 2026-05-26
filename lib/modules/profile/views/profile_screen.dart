@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_project_architecture/core/constants/app_colors.dart';
@@ -95,18 +93,22 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 14),
-                          Obx(
-                            () => Text(
-                              controller.nameController.text.isNotEmpty
-                                  ? controller.nameController.text
-                                  : 'Reseller',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white,
-                                letterSpacing: -0.5,
-                              ),
-                            ),
+                          ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: controller.nameController,
+                            builder: (_, value, __) {
+                              final name = value.text.isNotEmpty
+                                  ? value.text
+                                  : 'Reseller';
+                              return Text(
+                                name,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                  letterSpacing: -0.5,
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(height: 6),
                           Container(
